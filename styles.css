@@ -99,7 +99,7 @@ h4 {
 
 /* HERO SECTION - Estilo da imagem */
 .hero {
-  background: #C7BFB0;
+  background: #bd9954;
   color: #000;
   padding: 60px 20px;
   position: relative;
@@ -120,11 +120,19 @@ h4 {
 }
 
 .hero__text h1 {
-  font-size: clamp(32px, 4vw, 42px);
+  font-size: 36px;
   font-weight: 700;
   color: #000;
   margin-bottom: 20px;
   line-height: 1.2;
+}
+
+.hero__text h2 {
+  font-size: 20px; /* Reduza aqui o tamanho */
+  color: #fff; /* Altere aqui a cor */
+  margin-bottom: 30px;
+  line-height: 1.2;
+  font-weight: 400; /* Adicione peso da fonte se quiser */
 }
 
 .hero__text p {
@@ -157,34 +165,50 @@ h4 {
 .trust-badges {
   display: flex;
   gap: 20px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .badge {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .badge-icon {
-  width: 40px;
-  height: 40px;
-  background: #000;
-  color: #fff;
-  border-radius: 50%;
+  width: 70px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 18px;
   flex-shrink: 0;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
-.badge span {
+.badge-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.badge-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.badge-text strong {
   color: #000;
   font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
+  font-weight: 700;
+  display: block;
+}
+
+.badge-text span {
+  color: #000;
+  font-size: 13px;
+  font-weight: 400;
+  display: block;
 }
 
 .hero__image {
@@ -197,10 +221,7 @@ h4 {
   max-width: 100%;
   width: auto;
   height: auto;
-  max-height: 500px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  transform: perspective(1000px) rotateY(-15deg) rotateX(5deg);
-  border-radius: 8px;
+  max-height: 1000px; /* Aumentado de 500px para 700px */
 }
 
 .book-mockup {
@@ -429,7 +450,7 @@ h4 {
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
-  text-align: left;
+  text-align: center;
 }
 
 .problem-text strong {
@@ -627,7 +648,8 @@ h4 {
   align-items: center;
 }
 
-.gol-triangle svg {
+.gol-triangle svg,
+.triangle-image {
   display: block;
   width: 100%;
   max-width: 350px;
@@ -1233,7 +1255,7 @@ h4 {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
-  align-items: start;
+  align-items: center;
 }
 
 .offer-books {
@@ -1241,6 +1263,16 @@ h4 {
   flex-direction: column;
   gap: 40px;
   align-items: center;
+  justify-content: center;
+}
+
+.offer-book-image {
+  max-width: 100%;
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  max-height: 1000px;
+  object-fit: contain;
 }
 
 /* Livro Fechado - Oferta */
@@ -1512,34 +1544,50 @@ h4 {
   display: flex;
   justify-content: center;
   gap: 30px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .offer-badge {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .offer-badge-icon {
-  width: 40px;
-  height: 40px;
-  background: #000;
-  color: #fff;
-  border-radius: 50%;
+  width: 70px;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 18px;
   flex-shrink: 0;
+  padding: 5px;
+  box-sizing: border-box;
 }
 
-.offer-badge span {
+.offer-badge-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Torna o SVG branco */
+}
+
+.offer-badge-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+
+.offer-badge-text strong {
   color: #000;
   font-size: 14px;
-  font-weight: 600;
-  white-space: nowrap;
+  font-weight: 700;
+  display: block;
+}
+
+.offer-badge-text span {
+  color: #000;
+  font-size: 13px;
+  font-weight: 400;
+  display: block;
 }
 
 /* AUTHOR SECTION */
@@ -1701,6 +1749,13 @@ h4 {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+.testimonial-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .testimonial-info {
@@ -2180,7 +2235,7 @@ h4 {
 }
 
 .footer {
-  background: #0b1120;
+  background: #000;
   color: rgba(226, 232, 240, 0.75);
   padding: 2rem 0;
 }
@@ -2669,6 +2724,10 @@ h4 {
     gap: 30px;
   }
 
+  .offer-book-image {
+    max-height: 400px;
+  }
+
   .offer-book-mockup-closed {
     width: 240px;
     height: 320px;
@@ -2898,6 +2957,10 @@ h4 {
   .cta-inline {
     flex-direction: column;
     gap: 1.2rem;
+  }
+
+  .offer-book-image {
+    max-height: 300px;
   }
 
   .oferta__content {
