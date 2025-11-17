@@ -559,7 +559,7 @@ h4 {
   height: 0;
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
-  border-top: 8px solid #fff;
+  border-top: 10px solid #C85A5A; /* Vermelho suave - seta apontando para baixo */
 }
 
 .btn-problem {
@@ -2326,7 +2326,7 @@ h4 {
   }
 
   .top-bar {
-    font-size: 10px;
+    font-size: 13px;
     padding: 10px 15px;
   }
 
@@ -2338,10 +2338,32 @@ h4 {
     grid-template-columns: 1fr;
     gap: 30px;
   }
+  
 
   .trust-badges {
-    flex-direction: column;
-    gap: 15px;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+
+  .badge {
+    flex: 1;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .badge-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .badge-text strong {
+    font-size: 12px;
+  }
+
+  .badge-text span {
+    font-size: 11px;
   }
 
   .hero-book-image {
@@ -2371,10 +2393,14 @@ h4 {
   .btn-primary,
   .btn-secondary {
     width: 100%;
+    padding: 18px 30px;
+    font-size: 12px;
   }
 
   .btn-cta {
     width: 100%;
+    padding: 16px 0px;
+    font-size: 14px;
     text-align: center;
   }
 
@@ -2407,15 +2433,19 @@ h4 {
     font-size: 20px;
   }
 
+  .feature-card p {
+    font-size: 18px;
+  }
+
   .features-intro {
-    font-size: 16px;
+    font-size: 18px;
     margin: 40px auto 25px;
   }
 
   .btn-features {
     width: 100%;
-    padding: 18px 30px;
-    font-size: 16px;
+    padding: 16px 0px;
+    font-size: 14px;
   }
 
   .section-problem {
@@ -2470,8 +2500,8 @@ h4 {
 
   .btn-problem {
     width: 100%;
-    padding: 18px 30px;
-    font-size: 16px;
+    padding: 16px 0px;
+    font-size: 14px;
     margin: 40px auto 0;
   }
 
@@ -2535,8 +2565,8 @@ h4 {
 
   .btn-solution-bottom {
     width: 100%;
-    padding: 18px 30px;
-    font-size: 16px;
+    padding: 16px 0px;
+    font-size: 14px;
   }
 
   .section-product {
@@ -2656,8 +2686,8 @@ h4 {
 
   .btn-product-cta {
     width: 100%;
-    padding: 18px 30px;
-    font-size: 16px;
+    padding: 16px 0px;
+    font-size: 14px;
   }
 
   .section-bonus {
@@ -2688,8 +2718,8 @@ h4 {
 
   .btn-bonus {
     width: 100%;
-    padding: 18px 30px;
-    font-size: 16px;
+    padding: 16px 0px;
+    font-size: 14px;
   }
 
   .bonus-card-title {
@@ -2803,14 +2833,36 @@ h4 {
   }
 
   .btn-offer {
-    padding: 18px 30px;
-    font-size: 16px;
+    width: 100%;
+    padding: 16px 0px;
+    font-size: 14px;
   }
 
   .offer-badges {
-    flex-direction: column;
-    gap: 15px;
+    flex-direction: row;
+    gap: 10px;
     align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+  }
+
+  .offer-badge {
+    flex: 1;
+    min-width: 0;
+    gap: 8px;
+  }
+
+  .offer-badge-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .offer-badge-text strong {
+    font-size: 12px;
+  }
+
+  .offer-badge-text span {
+    font-size: 11px;
   }
 
   .section-author {
@@ -2905,8 +2957,8 @@ h4 {
 
   .btn-testimonials {
     width: 100%;
-    padding: 18px 30px;
-    font-size: 16px;
+    padding: 16px 0px;
+    font-size: 14px;
   }
 
   .section-faq {
