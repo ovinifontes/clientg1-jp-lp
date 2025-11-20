@@ -2491,7 +2491,7 @@ h4 {
   }
 
   .hero-book-image {
-    max-height: 300px;
+    max-height: 400px;
     transform: none;
   }
 
@@ -3207,6 +3207,95 @@ h4 {
 
   .oferta__bullets li::before {
     display: none;
+  }
+}
+
+/* Media Query para telas menores que 500px */
+@media (max-width: 500px) {
+  /* Ajuste dos selos (badges) no hero */
+  .trust-badges {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .badge {
+    flex: 0 0 auto;
+    min-width: 0;
+    gap: 6px;
+    display: flex;
+    align-items: center;
+  }
+
+  .badge-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .badge-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .badge-text strong {
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .badge-text span {
+    font-size: 9px;
+    font-weight: 400;
+  }
+
+  /* Ajuste do botão CTA - reduzir 2px da fonte */
+  .btn-cta {
+    font-size: 12px;
+    padding: 16px 20px;
+  }
+
+  /* Ajuste dos selos na seção de oferta */
+  .offer-badges {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .offer-badge {
+    flex: 0 0 auto;
+    min-width: 0;
+    gap: 6px;
+    display: flex;
+    align-items: center;
+  }
+
+  .offer-badge-icon {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+  }
+
+  .offer-badge-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .offer-badge-text strong {
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  .offer-badge-text span {
+    font-size: 9px;
+    font-weight: 400;
   }
 }
 
