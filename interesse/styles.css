@@ -97,6 +97,10 @@ body {
     color: #fff;
 }
 
+.highlight-yellow {
+    color: #FFD700;
+}
+
 .hero-subtitle {
     font-size: 20px;
     color: #ccc;
