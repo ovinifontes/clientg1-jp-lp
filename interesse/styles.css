@@ -52,6 +52,11 @@ body {
     letter-spacing: 1px;
 }
 
+/* Hero Badge Flutuante - Oculto no desktop */
+.hero-badge {
+    display: none;
+}
+
 /* Hero Section */
 .hero {
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
@@ -121,7 +126,7 @@ body {
     padding: 5px 10px;
     background: #ffdd00;
     border-radius: 5px;
-    font-weight: 1000;
+    font-weight: 900;
 }
 
 .btn-cta {
@@ -664,6 +669,7 @@ body {
     /* Header */
     .header {
         padding: 16px 0;
+        display: none;
     }
 
     .badge {
@@ -671,17 +677,63 @@ body {
         padding: 6px 12px;
     }
 
+    /* Hero Badge Flutuante - Visível no mobile */
+    .hero-badge {
+        display: block;
+        position: absolute;
+        bottom: 16px;
+        left: 16px;
+        background: rgba(26, 26, 26, 0.9);
+        color: #fff;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        z-index: 10;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
     /* Hero */
     .hero {
-        padding: 40px 16px;
+        padding: 0 0 30px 0; /* Remove padding top e laterais, mantém bottom */
+        display: flex;
+        flex-direction: column;
     }
     
     .hero-image-wrapper {
-        opacity: 0.25;
+        position: relative;
+        opacity: 1;
+        order: -1; /* Coloca a imagem antes do conteúdo */
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center; /* Centraliza horizontalmente */
+        align-items: flex-start; /* Alinha ao topo */
+        max-height: 370px; /* Altura máxima para caber nos 860px */
+        overflow: hidden;
     }
     
     .hero-image {
-        filter: blur(2px);
+        filter: none; /* Remove blur */
+        opacity: 1; /* Remove opacity */
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        max-height: 350px; /* Altura máxima da imagem */
+        object-fit: cover; /* Preenche toda a largura */
+        object-position: center top; /* Centraliza horizontalmente e alinha ao topo */
+        display: block;
+    }
+    
+    .hero .container {
+        order: 1; /* Coloca o conteúdo depois da imagem */
+        position: relative;
+        z-index: 1;
+        padding: 10px 16px 0 16px; /* Padding apenas no conteúdo */
     }
 
     .hero h1 {
