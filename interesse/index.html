@@ -191,9 +191,93 @@
         </div>
     </div>
 
-    <!-- Supabase SDK -->
+    <!-- Supabase SDK - Versão que funciona -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Criar cliente Supabase IMEDIATAMENTE quando o script carregar
+        (function() {
+            const SUPABASE_URL = 'https://ttzgmysucadmcfjulpbj.supabase.co';
+            const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0emdteXN1Y2FkbWNmanVscGJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUxMTg0OTUsImV4cCI6MjA3MDY5NDQ5NX0.510m4SDa6nMW3ftzzJ-A8FPm23lUB3xam123KYLlyRw';
+            
+            function criarClienteSupabase() {
+                if (window.supabase && typeof window.supabase.createClient === 'function') {
+                    window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                    console.log('✅ Cliente Supabase criado com sucesso!');
+                    return true;
+                }
+                return false;
+            }
+            
+            // Tentar criar imediatamente
+            if (!criarClienteSupabase()) {
+                // Se não funcionar, tentar após delays
+                setTimeout(criarClienteSupabase, 500);
+                setTimeout(criarClienteSupabase, 1500);
+                setTimeout(criarClienteSupabase, 3000);
+            }
+        })();
+    </script>
     <script src="script.js"></script>
+    <script>
+        // Countdown inline como fallback - garantir que funcione
+        (function() {
+            function initCountdownInline() {
+                const daysEl = document.getElementById('days');
+                const hoursEl = document.getElementById('hours');
+                const minutesEl = document.getElementById('minutes');
+                const secondsEl = document.getElementById('seconds');
+                
+                if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+                    setTimeout(initCountdownInline, 100);
+                    return;
+                }
+                
+                const targetDate = new Date(2025, 11, 22, 20, 0, 0);
+                
+                function update() {
+                    const now = new Date();
+                    const distance = targetDate.getTime() - now.getTime();
+                    
+                    if (distance <= 0) {
+                        daysEl.textContent = '00';
+                        hoursEl.textContent = '00';
+                        minutesEl.textContent = '00';
+                        secondsEl.textContent = '00';
+                        return;
+                    }
+                    
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    daysEl.textContent = String(days).padStart(2, '0');
+                    hoursEl.textContent = String(hours).padStart(2, '0');
+                    minutesEl.textContent = String(minutes).padStart(2, '0');
+                    secondsEl.textContent = String(seconds).padStart(2, '0');
+                }
+                
+                update();
+                setInterval(update, 1000);
+            }
+            
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initCountdownInline);
+            } else {
+                initCountdownInline();
+            }
+            
+            window.addEventListener('load', initCountdownInline);
+        })();
+        
+        // Garantir que o countdown seja iniciado também pela função do script.js
+        window.addEventListener('load', function() {
+            console.log('Window load disparado');
+            if (typeof startCountdown === 'function') {
+                setTimeout(startCountdown, 500);
+            }
+        });
+    </script>
 </body>
 </html>
 
