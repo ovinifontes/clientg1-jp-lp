@@ -80,7 +80,7 @@ function closeModal() {
 window.openFormModal = openFormModal;
 window.closeModal = closeModal;
 
-// Countdown timer da página - 22/12/2025 às 20h
+// Countdown timer da página - 20/01/2026 às 20h (America/Cuiaba)
 function startCountdown() {
     const daysEl = document.getElementById('days');
     const hoursEl = document.getElementById('hours');
@@ -92,7 +92,8 @@ function startCountdown() {
         return;
     }
     
-    const targetDate = new Date(2025, 11, 22, 20, 0, 0);
+    // Definir data alvo: 20 de janeiro de 2026 às 20:00 (horário de Cuiabá - UTC-4)
+    const targetDate = new Date('2026-01-20T20:00:00-04:00');
     
     function updateCountdown() {
         const now = new Date();
