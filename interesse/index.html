@@ -29,7 +29,7 @@
     
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="theme-light">
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -50,34 +50,28 @@
                 <h1>Bem-vindo à nova fase da <span class="highlight-yellow">prosperidade</span>: prática, estruturada e possível na vida real, mesmo começando do zero.</h1>
                 <p class="hero-subtitle">Nessa jornada, você aprende a organizar e conduzir sua vida financeira com clareza, usando princípios bíblicos testados, mesmo que hoje se sinta perdido ou travado.</p>
                 <p class="hero-date">📅 <strong>Dia 20 de janeiro às 20h</strong> <span>AO VIVO</span></p>
-                <button class="btn-cta" onclick="openFormModal()">Quero garantir meu acesso ao Manual</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Countdown Section -->
-    <section class="countdown-section">
-        <div class="container">
-            <h2 class="countdown-title">Garanta sua vaga agora</h2>
-            <div class="countdown">
-                <div class="countdown-item">
-                    <span class="countdown-number" id="days">00</span>
-                    <span class="countdown-label">Dias</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="hours">00</span>
-                    <span class="countdown-label">Horas</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="minutes">00</span>
-                    <span class="countdown-label">Minutos</span>
-                </div>
-                <div class="countdown-item">
-                    <span class="countdown-number" id="seconds">00</span>
-                    <span class="countdown-label">Segundos</span>
+                
+                <!-- Formulário Fixo dentro da Hero -->
+                <div class="fixed-form-wrapper">
+                    <h2 class="fixed-form-title">Garanta sua vaga agora</h2>
+                    <form id="leadFormFixed">
+                        <div class="form-group">
+                            <input type="text" id="nomeFixed" name="nomeFixed" placeholder="Insira seu nome" required>
+                        </div>
+                        <div class="form-group">
+                            <div class="phone-input">
+                                <div class="phone-prefix">
+                                    <span>🇧🇷</span>
+                                    <span>+55</span>
+                                    <span>▼</span>
+                                </div>
+                                <input type="tel" id="telefoneFixed" name="telefoneFixed" placeholder="(00) 00000-0000" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn-submit">CONTINUAR</button>
+                    </form>
                 </div>
             </div>
-            <p class="countdown-tag">MODELO BASEADO EM PRINCÍPIOS BÍBLICOS •</p>
         </div>
     </section>
 
@@ -88,33 +82,33 @@
             
             <div class="cards-grid">
                 <div class="card">
-                    <div class="card-icon">👨‍💼</div>
-                    <h3 class="card-title">Pessoas que trabalham muito</h3>
-                    <p class="card-text">e sentem que ganham dinheiro, mas nunca conseguem avançar, porque não sabem exatamente onde estão errando nas decisões do dia a dia.</p>
+                    <div class="card-icon">📊</div>
+                    <h3 class="card-title">Empreendedor que quer prosperar com ordem, não no grito.</h3>
+                    <p class="card-text">Você fatura, trabalha, corre… mas vive no aperto. E no fundo você sabe: prosperidade não é milagre solto. É sabedoria, disciplina e direção.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">👨‍👩‍👧‍👦</div>
+                    <h3 class="card-title">Pai e mãe de família que quer liderança dentro de casa.</h3>
+                    <p class="card-text">Você quer paz, quer segurança, quer parar de viver apagando incêndio. Porque família não precisa só de amor. Precisa de provisão com responsabilidade.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💸</div>
+                    <h3 class="card-title">Quem ganha entre 3 e 10 mil e quer parar de “sumir” com o dinheiro.</h3>
+                    <p class="card-text">Não é que você ganha pouco. É que sem governo sobre o que entra e o que sai, o dinheiro vira servo de impulso. E não ferramenta de propósito.</p>
                 </div>
 
                 <div class="card">
                     <div class="card-icon">📉</div>
-                    <h3 class="card-title">Pessoas que já tentaram melhorar de vida</h3>
-                    <p class="card-text">leram livros, assistiram vídeos, fizeram cursos… mas continuam aplicando tudo de forma solta, sem um método claro que funcione na prática.</p>
+                    <h3 class="card-title">Quem já tentou se organizar, mas sempre volta pro mesmo lugar.</h3>
+                    <p class="card-text">Você começa animado e depois perde o controle. A Bíblia fala de constância, de construir em cima da rocha. Aqui é isso: passo a passo, com método, sem bagunça.</p>
                 </div>
 
                 <div class="card">
                     <div class="card-icon">🧠</div>
-                    <h3 class="card-title">Pessoas cansadas de viver no automático</h3>
-                    <p class="card-text">repetindo ciclos de: Aperto financeiro, Ansiedade, Decisões impulsivas e querem finalmente assumir o controle da própria jornada.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">📊</div>
-                    <h3 class="card-title">Empreendedores, autônomos e profissionais liberais</h3>
-                    <p class="card-text">que até faturam, mas não têm previsibilidade, organização ou tranquilidade, e sabem que o problema não é só dinheiro é estrutura.</p>
-                </div>
-
-                <div class="card">
-                    <div class="card-icon">👨‍👩‍👧</div>
-                    <h3 class="card-title">Pessoas comprometidas com evolução real</h3>
-                    <p class="card-text">que querem sair de promessas vazias e construir prosperidade com consciência, responsabilidade e visão de longo prazo.</p>
+                    <h3 class="card-title">Quem quer sair do automático e viver com consciência.</h3>
+                    <p class="card-text">Chega de ansiedade e correria sem sentido. Prosperidade de verdade tem paz junto. E paz vem quando você coloca ordem, toma boas decisões e mantém a rota.</p>
                 </div>
             </div>
 
@@ -154,9 +148,6 @@
             <form id="leadForm">
                 <div class="form-group">
                     <input type="text" id="nome" name="nome" placeholder="Insira seu nome" required>
-                </div>
-                <div class="form-group">
-                    <input type="email" id="email" name="email" placeholder="Insira seu melhor e-mail" required>
                 </div>
                 <div class="form-group">
                     <div class="phone-input">
@@ -218,67 +209,6 @@
         })();
     </script>
     <script src="script.js"></script>
-    <script>
-        // Countdown inline como fallback - garantir que funcione
-        (function() {
-            function initCountdownInline() {
-                const daysEl = document.getElementById('days');
-                const hoursEl = document.getElementById('hours');
-                const minutesEl = document.getElementById('minutes');
-                const secondsEl = document.getElementById('seconds');
-                
-                if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
-                    setTimeout(initCountdownInline, 100);
-                    return;
-                }
-                
-                // Definir data alvo: 20 de janeiro de 2026 às 20:00 (horário de Cuiabá - UTC-4)
-                const targetDate = new Date('2026-01-20T20:00:00-04:00');
-                
-                function update() {
-                    const now = new Date();
-                    const distance = targetDate.getTime() - now.getTime();
-                    
-                    if (distance <= 0) {
-                        daysEl.textContent = '00';
-                        hoursEl.textContent = '00';
-                        minutesEl.textContent = '00';
-                        secondsEl.textContent = '00';
-                        return;
-                    }
-                    
-                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                    
-                    daysEl.textContent = String(days).padStart(2, '0');
-                    hoursEl.textContent = String(hours).padStart(2, '0');
-                    minutesEl.textContent = String(minutes).padStart(2, '0');
-                    secondsEl.textContent = String(seconds).padStart(2, '0');
-                }
-                
-                update();
-                setInterval(update, 1000);
-            }
-            
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', initCountdownInline);
-            } else {
-                initCountdownInline();
-            }
-            
-            window.addEventListener('load', initCountdownInline);
-        })();
-        
-        // Garantir que o countdown seja iniciado também pela função do script.js
-        window.addEventListener('load', function() {
-            console.log('Window load disparado');
-            if (typeof startCountdown === 'function') {
-                setTimeout(startCountdown, 500);
-            }
-        });
-    </script>
 </body>
 </html>
 

@@ -8,9 +8,9 @@ if (window.__scriptGiovanniLoaded) {
 // Não precisa de inicialização complexa aqui
 
 // Tentar salvar no Supabase em background (não bloqueia o fluxo)
-async function trySaveToSupabase(nome, email, telefone) {
+async function trySaveToSupabase(nome, telefone) {
     console.log('=== TENTANDO SALVAR NO SUPABASE ===');
-    console.log('Dados:', { nome, email, telefone });
+    console.log('Dados:', { nome, telefone });
     
     // Usar o cliente que foi criado no HTML
     const cliente = window.supabaseClient;
@@ -27,7 +27,7 @@ async function trySaveToSupabase(nome, email, telefone) {
         console.log('Enviando dados para Supabase...');
         const { data, error } = await cliente
             .from('interesse_giovanni')
-            .insert([{ nome, email, telefone }]);
+            .insert([{ nome, telefone }]);
         
         if (error) {
             console.error('❌ ERRO ao salvar no Supabase:', error);
@@ -80,46 +80,48 @@ function closeModal() {
 window.openFormModal = openFormModal;
 window.closeModal = closeModal;
 
-// Countdown timer da página - 20/01/2026 às 20h (America/Cuiaba)
-function startCountdown() {
-    const daysEl = document.getElementById('days');
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
+// Função reutilizável para processar submissão do formulário
+function processFormSubmission(nomeElementId, telefoneElementId, formElement) {
+    const nome = document.getElementById(nomeElementId);
+    const telefone = document.getElementById(telefoneElementId);
     
-    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
-        setTimeout(startCountdown, 100);
-        return;
+    if (!nome || !telefone) {
+        alert('Por favor, preencha todos os campos.');
+        return false;
     }
     
-    // Definir data alvo: 20 de janeiro de 2026 às 20:00 (horário de Cuiabá - UTC-4)
-    const targetDate = new Date('2026-01-20T20:00:00-04:00');
+    const nomeValue = nome.value.trim();
+    const telefoneValue = telefone.value.trim();
     
-    function updateCountdown() {
-        const now = new Date();
-        const distance = targetDate.getTime() - now.getTime();
-        
-        if (distance <= 0) {
-            daysEl.textContent = '00';
-            hoursEl.textContent = '00';
-            minutesEl.textContent = '00';
-            secondsEl.textContent = '00';
-            return;
-        }
-        
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        
-        daysEl.textContent = String(days).padStart(2, '0');
-        hoursEl.textContent = String(hours).padStart(2, '0');
-        minutesEl.textContent = String(minutes).padStart(2, '0');
-        secondsEl.textContent = String(seconds).padStart(2, '0');
+    if (!nomeValue || !telefoneValue) {
+        alert('Por favor, preencha todos os campos.');
+        return false;
     }
     
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    // FECHAR MODAL DE FORMULÁRIO (se estiver aberto)
+    const formModal = document.getElementById('formModal');
+    if (formModal) {
+        formModal.classList.remove('active');
+    }
+    
+    // LIMPAR FORMULÁRIO
+    if (formElement) {
+        formElement.reset();
+    }
+    
+    // ABRIR MODAL DE SUCESSO (sempre funciona)
+    const successModal = document.getElementById('successModal');
+    if (successModal) {
+        successModal.classList.add('active');
+    }
+    
+    // INICIAR COUNTDOWN DE REDIRECIONAMENTO (sempre funciona)
+    startRedirectCountdown();
+    
+    // Tentar salvar no Supabase em background (não bloqueia)
+    trySaveToSupabase(nomeValue, telefoneValue);
+    
+    return true;
 }
 
 // Countdown de redirecionamento
@@ -148,10 +150,18 @@ function startRedirectCountdown() {
 document.addEventListener('DOMContentLoaded', function() {
     // O cliente Supabase é criado diretamente no HTML, não precisa inicializar aqui
     
-    // Aplicar máscara no campo de telefone
+    // Aplicar máscara no campo de telefone do modal
     const telefoneInput = document.getElementById('telefone');
     if (telefoneInput) {
         telefoneInput.addEventListener('input', function(e) {
+            e.target.value = maskPhone(e.target.value);
+        });
+    }
+    
+    // Aplicar máscara no campo de telefone do formulário fixo
+    const telefoneInputFixed = document.getElementById('telefoneFixed');
+    if (telefoneInputFixed) {
+        telefoneInputFixed.addEventListener('input', function(e) {
             e.target.value = maskPhone(e.target.value);
         });
     }
@@ -169,60 +179,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Submeter formulário - FLUXO SIMPLIFICADO QUE SEMPRE FUNCIONA
+    // Submeter formulário do modal - FLUXO SIMPLIFICADO QUE SEMPRE FUNCIONA
     const leadForm = document.getElementById('leadForm');
     if (leadForm) {
         leadForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            const nome = document.getElementById('nome');
-            const email = document.getElementById('email');
-            const telefone = document.getElementById('telefone');
-            
-            if (!nome || !email || !telefone) {
-                alert('Por favor, preencha todos os campos.');
-                return;
-            }
-            
-            const nomeValue = nome.value.trim();
-            const emailValue = email.value.trim();
-            const telefoneValue = telefone.value.trim();
-            
-            if (!nomeValue || !emailValue || !telefoneValue) {
-                alert('Por favor, preencha todos os campos.');
-                return;
-            }
-            
-            // FECHAR MODAL DE FORMULÁRIO (sempre funciona)
-            const formModal = document.getElementById('formModal');
-            if (formModal) {
-                formModal.classList.remove('active');
-            }
-            
-            // LIMPAR FORMULÁRIO
-            leadForm.reset();
-            
-            // ABRIR MODAL DE SUCESSO (sempre funciona)
-            const successModal = document.getElementById('successModal');
-            if (successModal) {
-                successModal.classList.add('active');
-            }
-            
-            // INICIAR COUNTDOWN DE REDIRECIONAMENTO (sempre funciona)
-            startRedirectCountdown();
-            
-            // Tentar salvar no Supabase em background (não bloqueia)
-            trySaveToSupabase(nomeValue, emailValue, telefoneValue);
+            processFormSubmission('nome', 'telefone', leadForm);
         });
     }
     
-    // Iniciar countdown da página
-    startCountdown();
+    // Submeter formulário fixo - FLUXO SIMPLIFICADO QUE SEMPRE FUNCIONA
+    const leadFormFixed = document.getElementById('leadFormFixed');
+    if (leadFormFixed) {
+        leadFormFixed.addEventListener('submit', function(e) {
+            e.preventDefault();
+            processFormSubmission('nomeFixed', 'telefoneFixed', leadFormFixed);
+        });
+    }
 });
-
-// Inicialização alternativa caso o DOMContentLoaded já tenha passado
-if (document.readyState !== 'loading') {
-    startCountdown();
-}
 
 } // Fim da proteção contra carregamento múltiplo
