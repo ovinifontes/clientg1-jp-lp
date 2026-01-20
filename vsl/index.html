@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Jornada da Prosperidade | Transforme Sua Vida Financeira</title>
+    <meta name="description" content="Descubra como transformar sua vida financeira usando princípios bíblicos testados. Assista ao vídeo e veja se você se qualifica.">
+    
+    <!-- Meta Pixel Code - Adicionar depois -->
+    <!-- <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'SEU_PIXEL_ID_AQUI');
+    fbq('track', 'PageView');
+    </script> -->
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <p>VOCÊ ESTÁ PRESTES A DESCOBRIR O SEGREDO DA PROSPERIDADE BÍBLICA QUE TRANSFORMA VIDAS</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="vsl-container">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <h1 class="hero-title">ACELERE SUA PROSPERIDADE FINANCEIRA</h1>
+                <h2 class="hero-subtitle">Meu Aluno Faturou +R$40Mil Aplicando Princípios Bíblicos em Tempo Recorde</h2>
+                
+                <!-- Video Section -->
+                <div class="video-section">
+                    <h3 class="step-title">Passo 1: Assista esse Vídeo</h3>
+                    <div class="video-wrapper">
+                        <!-- Placeholder para vídeo VTURB -->
+                        <div class="video-placeholder">
+                            <div class="video-placeholder-content">
+                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="40" cy="40" r="38" stroke="#25D366" stroke-width="2"/>
+                                    <path d="M32 26L32 54L54 40L32 26Z" fill="#25D366"/>
+                                </svg>
+                                <p>Vídeo VTURB será inserido aqui</p>
+                                <small>Cole o código de embed do VTURB neste espaço</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="cta-section">
+                    <h3 class="step-title">Passo 2: Inscreva-se agora para ver se você se qualifica</h3>
+                    <p class="cta-note">(Inscreva-se somente DEPOIS de assistir ao vídeo inteiro)</p>
+                    <button class="btn-cta-primary" onclick="openFormModal()">AGENDE UMA CALL GRATUITA</button>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>Este site não é afiliado ao Facebook ou a qualquer entidade do Facebook. Se você sair do Facebook, não é responsabilidade deles, mas de nosso site.</p>
+            <p>Fazemos o nosso melhor para indicar e mostrar claramente todas as evidências do produto com resultados dos nossos próprios usuários. Não vendemos seu e-mail ou suas informações a terceiros. Nunca enviamos spam.</p>
+            <p>Se você tiver alguma dúvida, use o link de contato e fale conosco dias úteis a partir das 9h. até as 18h. De segunda a sexta e sábado das 10h as 14h. Respondemos na ordem de chegada em até 24h.</p>
+            <p class="footer-brand">© 2025 Jornada da Prosperidade | jornadadaprosperidade.com.br</p>
+        </div>
+    </footer>
+
+    <!-- Modal de Formulário -->
+    <div id="formModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <h2 class="modal-title">Garanta sua Presença na</h2>
+            <h3 class="modal-subtitle">Jornada da Prosperidade</h3>
+            <p class="modal-description">Preencha os dados abaixo:</p>
+            <form id="leadForm">
+                <div class="form-group">
+                    <input type="text" id="nome" name="nome" placeholder="Nome" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="email" name="email" placeholder="E-mail" required>
+                </div>
+                <div class="form-group">
+                    <input type="tel" id="telefone" name="telefone" placeholder="Telefone" required>
+                </div>
+                <button type="submit" class="btn-submit">ENVIAR DADOS</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
