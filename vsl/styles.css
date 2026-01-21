@@ -89,7 +89,6 @@ body {
 }
 
 .video-wrapper {
-    position: relative;
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
@@ -97,6 +96,22 @@ body {
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.video-wrapper vturb-smartplayer {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 0 !important;
+}
+
+.video-wrapper vturb-smartplayer::before,
+.video-wrapper vturb-smartplayer::after {
+    display: none !important;
 }
 
 .video-placeholder {
