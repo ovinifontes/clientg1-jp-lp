@@ -28,6 +28,16 @@
     </noscript>
     <!-- End Meta Pixel Code -->
     
+    <!-- VTURB Performance Optimization -->
+    <script>!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);</script>
+    <link rel="preload" href="https://scripts.converteai.net/68062536-7eb4-4ab7-9a0e-c18918a0378d/players/697030f0dd2fe7b48871fc9f/v4/player.js" as="script">
+    <link rel="preload" href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js" as="script">
+    <link rel="preload" href="https://cdn.converteai.net/68062536-7eb4-4ab7-9a0e-c18918a0378d/69703008a4304f1d777d26b1/main.m3u8" as="fetch">
+    <link rel="dns-prefetch" href="https://cdn.converteai.net">
+    <link rel="dns-prefetch" href="https://scripts.converteai.net">
+    <link rel="dns-prefetch" href="https://images.converteai.net">
+    <link rel="dns-prefetch" href="https://api.vturb.com.br">
+    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -48,25 +58,15 @@
                 <div class="video-section">
                     <h3 class="step-title">Passo 1: Assista esse Vídeo</h3>
                     <div class="video-wrapper">
-                        <!-- Placeholder para vídeo VTURB -->
-                        <div class="video-placeholder">
-                            <div class="video-placeholder-content">
-                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="40" cy="40" r="38" stroke="#25D366" stroke-width="2"/>
-                                    <path d="M32 26L32 54L54 40L32 26Z" fill="#25D366"/>
-                                </svg>
-                                <p>Vídeo VTURB será inserido aqui</p>
-                                <small>Cole o código de embed do VTURB neste espaço</small>
-                            </div>
-                        </div>
+                        <!-- Vídeo VTURB -->
+                        <vturb-smartplayer id="vid-697030f0dd2fe7b48871fc9f" style="display: block; margin: 0 auto; width: 100%; "></vturb-smartplayer>
+                        <script type="text/javascript">
+                            var s=document.createElement("script");
+                            s.src="https://scripts.converteai.net/68062536-7eb4-4ab7-9a0e-c18918a0378d/players/697030f0dd2fe7b48871fc9f/v4/player.js";
+                            s.async=!0;
+                            document.head.appendChild(s);
+                        </script>
                     </div>
-                </div>
-
-                <!-- CTA Section -->
-                <div class="cta-section">
-                    <h3 class="step-title">Passo 2: Inscreva-se agora para ver se você se qualifica</h3>
-                    <p class="cta-note">(Inscreva-se somente DEPOIS de assistir ao vídeo inteiro)</p>
-                    <button class="btn-cta-primary" onclick="openFormModal()">AGENDE UMA CALL GRATUITA</button>
                 </div>
             </section>
         </div>
