@@ -86,6 +86,9 @@ body {
 /* Video Section */
 .video-section {
     margin-bottom: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .video-wrapper {
@@ -104,7 +107,8 @@ body {
 .video-wrapper vturb-smartplayer {
     display: block !important;
     width: 100% !important;
-    margin: 0 !important;
+    max-width: 400px !important;
+    margin: 0 auto !important;
     padding: 0 !important;
     line-height: 0 !important;
 }
