@@ -256,7 +256,7 @@ body {
 .hero-date {
     font-size: 18px;
     color: var(--text-primary);
-    margin-bottom: 40px;
+    margin-bottom: 10px;
 }
 
 .hero-date span {
@@ -348,6 +348,51 @@ body {
     color: var(--text-tertiary);
     text-transform: uppercase;
     letter-spacing: 2px;
+}
+
+/* Learn Section */
+.learn-section {
+    background: var(--bg-primary);
+    padding: 80px 20px;
+}
+
+.learn-intro {
+    max-width: 820px;
+    margin: 0 auto 40px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+}
+
+.learn-subtitle {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 auto 30px;
+    color: var(--text-primary);
+    max-width: 820px;
+}
+
+.learn-list {
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: left;
+    list-style: none;
+    padding: 0;
+}
+
+.learn-list li {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    padding-left: 0;
+}
+
+.learn-list li strong {
+    color: var(--text-primary);
+    font-weight: 700;
 }
 
 /* Who Section */
@@ -947,6 +992,28 @@ body.theme-light .author-section {
 
     .countdown-tag {
         font-size: 12px;
+    }
+
+    /* Learn Section */
+    .learn-section {
+        padding: 50px 10px 10px 10px;
+    }
+
+    .learn-intro {
+        font-size: 18px;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    .learn-subtitle {
+        font-size: 20px;
+        margin-bottom: 24px;
+    }
+
+    .learn-list li {
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 10px;
     }
 
     /* Who Section */
