@@ -121,6 +121,12 @@ async function processFormSubmission(nomeElementId, telefoneElementId, formEleme
         // Aguardar salvamento no Supabase antes de redirecionar
         await trySaveToSupabase(nomeValue, telefoneValue);
         
+        // Disparar evento de conversão do Meta Pixel
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'Lead');
+            console.log('✅ Evento Lead disparado no Meta Pixel');
+        }
+        
         // LIMPAR FORMULÁRIO
         if (formElement) {
             formElement.reset();
