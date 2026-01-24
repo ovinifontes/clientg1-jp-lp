@@ -7,7 +7,7 @@ if (window.__scriptGiovanniLoaded) {
 // O cliente Supabase é criado diretamente no HTML quando o script carrega
 // Não precisa de inicialização complexa aqui
 
-// Tentar salvar no Supabase em background (não bloqueia o fluxo)
+// Tentar salvar no Supabase - agora aguarda o resultado
 async function trySaveToSupabase(nome, telefone) {
     console.log('=== TENTANDO SALVAR NO SUPABASE ===');
     console.log('Dados:', { nome, telefone });
@@ -17,32 +17,37 @@ async function trySaveToSupabase(nome, telefone) {
     
     console.log('Cliente Supabase disponível?', !!cliente);
     
-    if (!cliente) {
-        console.log('⚠️ Supabase não disponível, pulando salvamento');
+    let clienteFinal = cliente;
+    
+    if (!clienteFinal) {
+        console.log('⚠️ Supabase não disponível, aguardando...');
         console.log('window.supabaseClient:', window.supabaseClient);
-        return;
+        // Aguardar um pouco para garantir que o cliente seja criado
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        clienteFinal = window.supabaseClient;
+        if (!clienteFinal) {
+            throw new Error('Supabase não disponível após tentativa');
+        }
     }
     
-    try {
-        console.log('Enviando dados para Supabase...');
-        const { data, error } = await cliente
-            .from('interesse_giovanni')
-            .insert([{ nome, telefone }]);
-        
-        if (error) {
-            console.error('❌ ERRO ao salvar no Supabase:', error);
-            console.error('Código:', error.code);
-            console.error('Mensagem:', error.message);
-            console.error('Detalhes:', error.details);
-            return;
-        }
-        
-        console.log('✅✅✅ DADOS SALVOS COM SUCESSO NO SUPABASE!');
-        console.log('ID do registro:', data?.[0]?.id);
-        console.log('Dados salvos:', data);
-    } catch (error) {
-        console.error('❌ ERRO ao tentar salvar:', error);
+    console.log('Enviando dados para Supabase...');
+    const { data, error } = await clienteFinal
+        .from('interesse_giovanni')
+        .insert([{ nome, telefone }]);
+    
+    if (error) {
+        console.error('❌ ERRO ao salvar no Supabase:', error);
+        console.error('Código:', error.code);
+        console.error('Mensagem:', error.message);
+        console.error('Detalhes:', error.details);
+        throw error;
     }
+    
+    console.log('✅✅✅ DADOS SALVOS COM SUCESSO NO SUPABASE!');
+    console.log('ID do registro:', data?.[0]?.id);
+    console.log('Dados salvos:', data);
+    
+    return data;
 }
 
 // Máscara de telefone brasileira
@@ -81,7 +86,7 @@ window.openFormModal = openFormModal;
 window.closeModal = closeModal;
 
 // Função reutilizável para processar submissão do formulário
-function processFormSubmission(nomeElementId, telefoneElementId, formElement) {
+async function processFormSubmission(nomeElementId, telefoneElementId, formElement) {
     const nome = document.getElementById(nomeElementId);
     const telefone = document.getElementById(telefoneElementId);
     
@@ -98,28 +103,37 @@ function processFormSubmission(nomeElementId, telefoneElementId, formElement) {
         return false;
     }
     
+    // Desabilitar botão para evitar múltiplos envios
+    const submitButton = formElement.querySelector('button[type="submit"]');
+    if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Enviando...';
+    }
+    
     // FECHAR MODAL DE FORMULÁRIO (se estiver aberto)
     const formModal = document.getElementById('formModal');
     if (formModal) {
         formModal.classList.remove('active');
+        document.body.style.overflow = 'auto';
     }
     
-    // LIMPAR FORMULÁRIO
-    if (formElement) {
-        formElement.reset();
+    try {
+        // Aguardar salvamento no Supabase antes de redirecionar
+        await trySaveToSupabase(nomeValue, telefoneValue);
+        
+        // LIMPAR FORMULÁRIO
+        if (formElement) {
+            formElement.reset();
+        }
+        
+        // REDIRECIONAR PARA PÁGINA DE AGRADECIMENTO
+        window.location.href = 'https://www.jornadadaprosperidade.com.br/interesse/agradecimento';
+        
+    } catch (error) {
+        console.error('Erro ao processar formulário:', error);
+        // Mesmo com erro, redirecionar para não bloquear o usuário
+        window.location.href = 'https://www.jornadadaprosperidade.com.br/interesse/agradecimento';
     }
-    
-    // ABRIR MODAL DE SUCESSO (sempre funciona)
-    const successModal = document.getElementById('successModal');
-    if (successModal) {
-        successModal.classList.add('active');
-    }
-    
-    // INICIAR COUNTDOWN DE REDIRECIONAMENTO (sempre funciona)
-    startRedirectCountdown();
-    
-    // Tentar salvar no Supabase em background (não bloqueia)
-    trySaveToSupabase(nomeValue, telefoneValue);
     
     return true;
 }
