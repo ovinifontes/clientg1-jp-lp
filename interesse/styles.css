@@ -28,8 +28,8 @@ body.theme-light {
     --text-tertiary: #6a6a6a;
     --text-quaternary: #5a5a5a;
     --border-color: #d0d0d0;
-    --accent-green: #25D366;
-    --accent-green-hover: #20BA5A;
+    --accent-green: #1F7A4D;
+    --accent-green-hover: #196642;
     --accent-yellow: #FFD700;
     --accent-yellow-alt: #ffdd00;
     --modal-overlay: rgba(0, 0, 0, 0.5);
@@ -47,8 +47,8 @@ body.theme-dark {
     --text-tertiary: #999999;
     --text-quaternary: #666666;
     --border-color: #333333;
-    --accent-green: #25D366;
-    --accent-green-hover: #20BA5A;
+    --accent-green: #1F7A4D;
+    --accent-green-hover: #196642;
     --accent-yellow: #FFD700;
     --accent-yellow-alt: #ffdd00;
     --modal-overlay: rgba(0, 0, 0, 0.85);
