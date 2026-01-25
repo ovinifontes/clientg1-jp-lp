@@ -62,27 +62,33 @@ function maskPhone(value) {
     return value;
 }
 
-// Abrir modal de formulário (função global) - DEFINIDA IMEDIATAMENTE
-function openFormModal() {
-    const modal = document.getElementById('formModal');
-    if (modal) {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
+// Scroll suave até o formulário fixo (função global) - DEFINIDA IMEDIATAMENTE
+function scrollToForm() {
+    const formElement = document.getElementById('topo-form');
+    if (formElement) {
+        formElement.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'start' 
+        });
+        // Focar no primeiro campo após o scroll
+        setTimeout(() => {
+            const nomeInput = document.getElementById('nomeFixed');
+            if (nomeInput) {
+                nomeInput.focus();
+            }
+        }, 500);
     }
 }
 
-// Fechar modal - DEFINIDA IMEDIATAMENTE
+// Fechar modal (mantido para compatibilidade com modal de sucesso) - DEFINIDA IMEDIATAMENTE
 function closeModal() {
-    const formModal = document.getElementById('formModal');
     const successModal = document.getElementById('successModal');
-    
-    if (formModal) formModal.classList.remove('active');
     if (successModal) successModal.classList.remove('active');
     document.body.style.overflow = 'auto';
 }
 
 // Garantir que funções estejam disponíveis globalmente IMEDIATAMENTE
-window.openFormModal = openFormModal;
+window.scrollToForm = scrollToForm;
 window.closeModal = closeModal;
 
 // Função reutilizável para processar submissão do formulário
@@ -110,12 +116,7 @@ async function processFormSubmission(nomeElementId, telefoneElementId, formEleme
         submitButton.textContent = 'Enviando...';
     }
     
-    // FECHAR MODAL DE FORMULÁRIO (se estiver aberto)
-    const formModal = document.getElementById('formModal');
-    if (formModal) {
-        formModal.classList.remove('active');
-        document.body.style.overflow = 'auto';
-    }
+    // Não há mais modal de formulário, apenas o formulário fixo
     
     try {
         // Aguardar salvamento no Supabase antes de redirecionar
@@ -170,14 +171,6 @@ function startRedirectCountdown() {
 document.addEventListener('DOMContentLoaded', function() {
     // O cliente Supabase é criado diretamente no HTML, não precisa inicializar aqui
     
-    // Aplicar máscara no campo de telefone do modal
-    const telefoneInput = document.getElementById('telefone');
-    if (telefoneInput) {
-        telefoneInput.addEventListener('input', function(e) {
-            e.target.value = maskPhone(e.target.value);
-        });
-    }
-    
     // Aplicar máscara no campo de telefone do formulário fixo
     const telefoneInputFixed = document.getElementById('telefoneFixed');
     if (telefoneInputFixed) {
@@ -186,27 +179,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Fechar modal ao clicar fora
+    // Fechar modal de sucesso ao clicar fora
     window.addEventListener('click', function(event) {
-        const formModal = document.getElementById('formModal');
         const successModal = document.getElementById('successModal');
-        
-        if (event.target === formModal) {
-            closeModal();
-        }
         if (event.target === successModal) {
             closeModal();
         }
     });
-    
-    // Submeter formulário do modal - FLUXO SIMPLIFICADO QUE SEMPRE FUNCIONA
-    const leadForm = document.getElementById('leadForm');
-    if (leadForm) {
-        leadForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            processFormSubmission('nome', 'telefone', leadForm);
-        });
-    }
     
     // Submeter formulário fixo - FLUXO SIMPLIFICADO QUE SEMPRE FUNCIONA
     const leadFormFixed = document.getElementById('leadFormFixed');
