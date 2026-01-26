@@ -7,6 +7,63 @@ if (window.__scriptGiovanniLoaded) {
 // O cliente Supabase é criado diretamente no HTML quando o script carrega
 // Não precisa de inicialização complexa aqui
 
+// ⚠️ CONFIGURAÇÃO: URL do webhook do n8n
+const N8N_WEBHOOK_URL = 'https://n8n00-vini-n8n.hq6fn5.easypanel.host/webhook/giovani_captura_bem_vindo';
+
+// Normalizar telefone: remover formatação e deixar apenas números
+function normalizePhone(telefone) {
+    if (!telefone) return '';
+    // Remove todos os caracteres não numéricos
+    return telefone.replace(/\D/g, '');
+}
+
+// Formatar telefone para webhook: adiciona código do país (55) se não tiver
+function formatPhoneForWebhook(telefone) {
+    const telefoneNormalizado = normalizePhone(telefone);
+    if (!telefoneNormalizado) return '';
+    
+    // Se já começar com 55, retorna como está
+    if (telefoneNormalizado.startsWith('55')) {
+        return telefoneNormalizado;
+    }
+    
+    // Caso contrário, adiciona 55 no início
+    return '55' + telefoneNormalizado;
+}
+
+// Enviar webhook para o n8n com nome e telefone
+async function sendWebhookToN8N(nome, telefone) {
+    try {
+        const telefoneFormatado = formatPhoneForWebhook(telefone);
+        console.log('=== ENVIANDO WEBHOOK PARA N8N ===');
+        console.log('Dados:', { nome, telefone: telefoneFormatado });
+
+        const response = await fetch(N8N_WEBHOOK_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                nome: nome.trim(),
+                telefone: telefoneFormatado
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(`Erro HTTP: ${response.status}`);
+        }
+
+        console.log('✅✅✅ WEBHOOK ENVIADO COM SUCESSO PARA O N8N!');
+        const responseData = await response.json().catch(() => ({}));
+        console.log('Resposta do n8n:', responseData);
+
+    } catch (error) {
+        // Não bloquear o fluxo se o webhook falhar
+        console.error('❌ ERRO ao enviar webhook para n8n:', error);
+        console.error('O formulário continuará normalmente mesmo com erro no webhook');
+    }
+}
+
 // Tentar salvar no Supabase - agora aguarda o resultado
 async function trySaveToSupabase(nome, telefone) {
     console.log('=== TENTANDO SALVAR NO SUPABASE ===');
@@ -121,6 +178,9 @@ async function processFormSubmission(nomeElementId, telefoneElementId, formEleme
     try {
         // Aguardar salvamento no Supabase antes de redirecionar
         await trySaveToSupabase(nomeValue, telefoneValue);
+        
+        // ✅ NOVO: Enviar webhook para o n8n após salvar no Supabase
+        await sendWebhookToN8N(nomeValue, telefoneValue);
         
         // Disparar evento de conversão do Meta Pixel
         if (typeof fbq !== 'undefined') {
