@@ -36,6 +36,7 @@ async function sendWebhookToN8N(nome, telefone) {
     try {
         const telefoneFormatado = formatPhoneForWebhook(telefone);
         console.log('=== ENVIANDO WEBHOOK PARA N8N ===');
+        console.log('URL:', N8N_WEBHOOK_URL);
         console.log('Dados:', { nome, telefone: telefoneFormatado });
 
         const response = await fetch(N8N_WEBHOOK_URL, {
@@ -49,17 +50,36 @@ async function sendWebhookToN8N(nome, telefone) {
             })
         });
 
+        const responseText = await response.text();
+        console.log('Status HTTP:', response.status);
+        console.log('Resposta do n8n (texto):', responseText);
+
         if (!response.ok) {
-            throw new Error(`Erro HTTP: ${response.status}`);
+            // Tentar parsear como JSON se possível para ver o erro detalhado
+            let errorDetails = responseText;
+            try {
+                const errorJson = JSON.parse(responseText);
+                errorDetails = JSON.stringify(errorJson, null, 2);
+            } catch (e) {
+                // Se não for JSON, usar o texto como está
+            }
+            throw new Error(`Erro HTTP ${response.status}: ${errorDetails}`);
         }
 
         console.log('✅✅✅ WEBHOOK ENVIADO COM SUCESSO PARA O N8N!');
-        const responseData = await response.json().catch(() => ({}));
-        console.log('Resposta do n8n:', responseData);
+        
+        // Tentar parsear resposta como JSON se possível
+        try {
+            const responseData = JSON.parse(responseText);
+            console.log('Resposta do n8n (JSON):', responseData);
+        } catch (e) {
+            console.log('Resposta do n8n não é JSON, mas foi enviado com sucesso');
+        }
 
     } catch (error) {
         // Não bloquear o fluxo se o webhook falhar
         console.error('❌ ERRO ao enviar webhook para n8n:', error);
+        console.error('Mensagem de erro:', error.message);
         console.error('O formulário continuará normalmente mesmo com erro no webhook');
     }
 }
