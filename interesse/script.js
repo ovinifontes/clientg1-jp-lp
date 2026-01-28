@@ -213,13 +213,35 @@ async function processFormSubmission(nomeElementId, telefoneElementId, formEleme
             formElement.reset();
         }
         
-        // REDIRECIONAR PARA PÁGINA DE AGRADECIMENTO
-        window.location.href = 'https://www.jornadadaprosperidade.com.br/interesse/agradecimento';
+        // Mostrar modal de sucesso e iniciar countdown
+        const successModal = document.getElementById('successModal');
+        if (successModal) {
+            successModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Iniciar countdown de 5 segundos
+            startRedirectCountdown();
+        } else {
+            // Fallback: se o modal não existir, redirecionar diretamente
+            console.warn('Modal de sucesso não encontrado, redirecionando diretamente...');
+            setTimeout(() => {
+                window.location.href = 'https://chat.whatsapp.com/J401aAtX0LbAFHzxwGbSf7';
+            }, 1000);
+        }
         
     } catch (error) {
         console.error('Erro ao processar formulário:', error);
-        // Mesmo com erro, redirecionar para não bloquear o usuário
-        window.location.href = 'https://www.jornadadaprosperidade.com.br/interesse/agradecimento';
+        // Mesmo com erro, mostrar modal de sucesso
+        const successModal = document.getElementById('successModal');
+        if (successModal) {
+            successModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            startRedirectCountdown();
+        } else {
+            // Fallback: redirecionar diretamente
+            setTimeout(() => {
+                window.location.href = 'https://chat.whatsapp.com/J401aAtX0LbAFHzxwGbSf7';
+            }, 1000);
+        }
     }
     
     return true;
@@ -227,6 +249,12 @@ async function processFormSubmission(nomeElementId, telefoneElementId, formEleme
 
 // Countdown de redirecionamento
 function startRedirectCountdown() {
+    // Ocultar indicador de carregamento
+    const loadingIndicator = document.querySelector('.loading-indicator');
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+    }
+    
     let seconds = 5;
     const countdownElement = document.getElementById('redirectCountdown');
     const secondsElement = document.getElementById('redirectSeconds');
