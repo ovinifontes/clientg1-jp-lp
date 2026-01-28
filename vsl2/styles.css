@@ -527,6 +527,13 @@ body {
     height: 20px;
 }
 
+/* Esconder ícone dos botões apenas no desktop */
+@media (min-width: 769px) {
+    .btn-cta__icon {
+        display: none;
+    }
+}
+
 .btn-cta__text {
     white-space: normal;
     text-align: center;
