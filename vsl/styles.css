@@ -1241,3 +1241,10 @@ body {
         font-size: 14px;
     }
 }
+
+/* Esconder ícone dos botões apenas no desktop */
+@media (min-width: 769px) {
+    .btn-cta__icon {
+        display: none !important;
+    }
+}
