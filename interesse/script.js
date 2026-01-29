@@ -31,6 +31,35 @@ function formatPhoneForWebhook(telefone) {
     return '55' + telefoneNormalizado;
 }
 
+// Formatar telefone para Supabase: garante formato 55DD9XXXXXXXX
+function formatPhoneForSupabase(telefone) {
+    // Remove toda formatação, deixando apenas números
+    const telefoneNormalizado = normalizePhone(telefone);
+    if (!telefoneNormalizado) return '';
+    
+    let telefoneFormatado = telefoneNormalizado;
+    
+    // Se já começar com 55, remove para processar o número nacional
+    if (telefoneFormatado.startsWith('55')) {
+        telefoneFormatado = telefoneFormatado.substring(2);
+    }
+    
+    // Garantir formato: DDD (2 dígitos) + 9 + número (8 dígitos) = 11 dígitos
+    // Se tiver 10 dígitos (DD + 8 dígitos - formato antigo), adiciona o 9
+    if (telefoneFormatado.length === 10) {
+        // Formato antigo: DDD + 8 dígitos -> adiciona 9 após o DDD
+        const ddd = telefoneFormatado.substring(0, 2);
+        const numero = telefoneFormatado.substring(2);
+        telefoneFormatado = ddd + '9' + numero;
+    }
+    // Se tiver 11 dígitos (DD + 9 + 8 dígitos), está correto
+    // Se tiver 9 dígitos (DD + 7 dígitos), pode estar incompleto, mas vamos processar
+    // Se tiver menos de 9, pode estar muito incompleto
+    
+    // Adiciona o código do país 55 no início
+    return '55' + telefoneFormatado;
+}
+
 // Enviar webhook para o n8n com nome e telefone
 async function sendWebhookToN8N(nome, telefone) {
     try {
@@ -107,10 +136,15 @@ async function trySaveToSupabase(nome, telefone) {
         }
     }
     
+    // Formatar telefone para o formato correto do Supabase: 55DD9XXXXXXXX
+    const telefoneFormatado = formatPhoneForSupabase(telefone);
+    console.log('Telefone original:', telefone);
+    console.log('Telefone formatado para Supabase:', telefoneFormatado);
+    
     console.log('Enviando dados para Supabase...');
     const { data, error } = await clienteFinal
         .from('interesse_giovanni')
-        .insert([{ nome, telefone }]);
+        .insert([{ nome, telefone: telefoneFormatado }]);
     
     if (error) {
         console.error('❌ ERRO ao salvar no Supabase:', error);
@@ -127,16 +161,31 @@ async function trySaveToSupabase(nome, telefone) {
     return data;
 }
 
-// Máscara de telefone brasileira
+// Máscara de telefone brasileira: (DD) D DDDD-DDDD
 function maskPhone(value) {
     if (!value) return '';
     value = value.replace(/\D/g, '');
-    if (value.length <= 10) {
-        value = value.replace(/^(\d{2})(\d{4})(\d{0,4}).*/, '($1) $2-$3');
-    } else {
-        value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
+    
+    // Se tiver 11 dígitos (DD + 9 + 8 dígitos): (DD) D DDDD-DDDD
+    if (value.length === 11) {
+        value = value.replace(/^(\d{2})(\d{1})(\d{4})(\d{4}).*/, '($1) $2 $3-$4');
     }
-    return value;
+    // Se tiver 10 dígitos (DD + 8 dígitos - formato antigo): (DD) DDDD-DDDD
+    else if (value.length === 10) {
+        value = value.replace(/^(\d{2})(\d{4})(\d{4}).*/, '($1) $2-$3');
+    }
+    // Durante a digitação
+    else if (value.length > 6) {
+        value = value.replace(/^(\d{2})(\d{1})(\d{0,4})(\d{0,4}).*/, '($1) $2 $3-$4');
+    }
+    else if (value.length > 2) {
+        value = value.replace(/^(\d{2})(\d{0,5}).*/, '($1) $2');
+    }
+    else if (value.length > 0) {
+        value = value.replace(/^(\d{0,2}).*/, '($1');
+    }
+    
+    return value.trim();
 }
 
 // Scroll suave até o formulário fixo (função global) - DEFINIDA IMEDIATAMENTE
