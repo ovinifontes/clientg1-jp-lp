@@ -377,7 +377,7 @@ body {
 .learn-list {
     max-width: 820px;
     margin: 0 auto;
-    text-align: left;
+    text-align: center;
     list-style: none;
     padding: 0;
 }
