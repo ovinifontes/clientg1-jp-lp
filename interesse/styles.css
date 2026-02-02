@@ -426,7 +426,7 @@ body.theme-light .hero-badge {
 
 /* Countdown Section */
 .countdown-section {
-    background: var(--accent-green);
+    background: #ff0000;
     padding: 12px 20px;
     text-align: center;
     position: relative;
