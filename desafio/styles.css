@@ -2578,7 +2578,7 @@
     .btn-cta {
       width: 100%;
       padding: 16px 0px;
-      font-size: 14px;
+      font-size: 16px;
       text-align: center;
     }
   
@@ -2623,7 +2623,7 @@
     .btn-features {
       width: 100%;
       padding: 16px 0px;
-      font-size: 14px;
+      font-size: 16px;
     }
   
     .section-problem {
@@ -2679,7 +2679,7 @@
     .btn-problem {
       width: 100%;
       padding: 16px 0px;
-      font-size: 14px;
+      font-size: 16px;
       margin: 40px auto 0;
     }
   
@@ -2750,7 +2750,7 @@
     .btn-solution-bottom {
       width: 100%;
       padding: 16px 0px;
-      font-size: 14px;
+      font-size: 16px;
     }
   
     .section-product {
@@ -2871,7 +2871,7 @@
     .btn-product-cta {
       width: 100%;
       padding: 16px 0px;
-      font-size: 14px;
+      font-size: 16px;
     }
   
     .section-bonus {
@@ -2903,7 +2903,7 @@
     .btn-bonus {
       width: 100%;
       padding: 16px 0px;
-      font-size: 14px;
+      font-size: 16px;
     }
   
     .bonus-card-title {
@@ -3067,7 +3067,7 @@
     .btn-offer {
       width: 100%;
       padding: 16px 0px;
-      font-size: 14px;
+      font-size: 16px;
     }
   
     .offer-badges {
@@ -3190,7 +3190,7 @@
     .btn-testimonials {
       width: 100%;
       padding: 16px 0px;
-      font-size: 14px;
+      font-size: 16px;
     }
   
     .section-faq {
@@ -3306,9 +3306,9 @@
       font-weight: 400;
     }
   
-    /* Ajuste do botão CTA - reduzir 2px da fonte */
+    /* Ajuste do botão CTA - aumentar fonte no mobile */
     .btn-cta {
-      font-size: 12px;
+      font-size: 16px;
       padding: 16px 20px;
     }
   
