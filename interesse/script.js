@@ -269,35 +269,13 @@ async function processFormSubmission(emailElementId, telefoneElementId, formElem
             formElement.reset();
         }
         
-        // Mostrar modal de sucesso e iniciar countdown
-        const successModal = document.getElementById('successModal');
-        if (successModal) {
-            successModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            // Iniciar countdown de 15 segundos
-            startRedirectCountdown();
-        } else {
-            // Fallback: se o modal não existir, redirecionar diretamente
-            console.warn('Modal de sucesso não encontrado, redirecionando diretamente...');
-            setTimeout(() => {
-                window.location.href = 'https://chat.whatsapp.com/J401aAtX0LbAFHzxwGbSf7';
-            }, 1000);
-        }
+        // Redirecionar diretamente para o link após salvar no Supabase
+        window.location.href = 'https://jornadadaprosperidade.applive.com.br/justintimegiovani/lp';
         
     } catch (error) {
         console.error('Erro ao processar formulário:', error);
-        // Mesmo com erro, mostrar modal de sucesso
-        const successModal = document.getElementById('successModal');
-        if (successModal) {
-            successModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            startRedirectCountdown();
-        } else {
-            // Fallback: redirecionar diretamente
-            setTimeout(() => {
-                window.location.href = 'https://chat.whatsapp.com/J401aAtX0LbAFHzxwGbSf7';
-            }, 1000);
-        }
+        // Mesmo com erro, redirecionar diretamente
+        window.location.href = 'https://jornadadaprosperidade.applive.com.br/justintimegiovani/lp';
     }
     
     return true;
