@@ -269,13 +269,20 @@ async function processFormSubmission(emailElementId, telefoneElementId, formElem
             formElement.reset();
         }
         
+        // Construir URL com parâmetros do formulário
+        const nome = ''; // Campo nome não existe no formulário atual
+        const telefoneNormalizado = normalizePhone(telefoneValue);
+        const redirectUrl = `https://jornadadaprosperidade.applive.com.br/justintimegiovani/evento?nome=${encodeURIComponent(nome)}&email=${encodeURIComponent(emailValue)}&telefone=${encodeURIComponent(telefoneNormalizado)}`;
+        
         // Redirecionar diretamente para o link após salvar no Supabase
-        window.location.href = 'https://jornadadaprosperidade.applive.com.br/justintimegiovani/lp';
+        window.location.href = redirectUrl;
         
     } catch (error) {
         console.error('Erro ao processar formulário:', error);
-        // Mesmo com erro, redirecionar diretamente
-        window.location.href = 'https://jornadadaprosperidade.applive.com.br/justintimegiovani/lp';
+        // Mesmo com erro, redirecionar diretamente com os dados disponíveis
+        const telefoneNormalizado = normalizePhone(telefoneValue);
+        const redirectUrl = `https://jornadadaprosperidade.applive.com.br/justintimegiovani/evento?nome=${encodeURIComponent('')}&email=${encodeURIComponent(emailValue)}&telefone=${encodeURIComponent(telefoneNormalizado)}`;
+        window.location.href = redirectUrl;
     }
     
     return true;
