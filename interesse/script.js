@@ -60,13 +60,13 @@ function formatPhoneForSupabase(telefone) {
     return '55' + telefoneFormatado;
 }
 
-// Enviar webhook para o n8n com email e telefone
-async function sendWebhookToN8N(email, telefone) {
+// Enviar webhook para o n8n com nome e telefone
+async function sendWebhookToN8N(nome, telefone) {
     try {
         const telefoneFormatado = formatPhoneForWebhook(telefone);
         console.log('=== ENVIANDO WEBHOOK PARA N8N ===');
         console.log('URL:', N8N_WEBHOOK_URL);
-        console.log('Dados:', { email, telefone: telefoneFormatado });
+        console.log('Dados:', { nome, telefone: telefoneFormatado });
 
         const response = await fetch(N8N_WEBHOOK_URL, {
             method: 'POST',
@@ -74,7 +74,7 @@ async function sendWebhookToN8N(email, telefone) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                email: email.trim(),
+                nome: nome.trim(),
                 telefone: telefoneFormatado
             })
         });
@@ -114,9 +114,9 @@ async function sendWebhookToN8N(email, telefone) {
 }
 
 // Tentar salvar no Supabase - agora aguarda o resultado
-async function trySaveToSupabase(email, telefone) {
+async function trySaveToSupabase(nome, telefone) {
     console.log('=== TENTANDO SALVAR NO SUPABASE ===');
-    console.log('Dados:', { email, telefone });
+    console.log('Dados:', { nome, telefone });
     
     // Usar o cliente que foi criado no HTML
     const cliente = window.supabaseClient;
@@ -144,7 +144,7 @@ async function trySaveToSupabase(email, telefone) {
     console.log('Enviando dados para Supabase...');
     const { data, error } = await clienteFinal
         .from('interesse_giovanni')
-        .insert([{ email, telefone: telefoneFormatado }]);
+        .insert([{ nome, telefone: telefoneFormatado }]);
     
     if (error) {
         console.error('❌ ERRO ao salvar no Supabase:', error);
@@ -218,27 +218,20 @@ window.scrollToForm = scrollToForm;
 window.closeModal = closeModal;
 
 // Função reutilizável para processar submissão do formulário
-async function processFormSubmission(emailElementId, telefoneElementId, formElement) {
-    const email = document.getElementById(emailElementId);
+async function processFormSubmission(nomeElementId, telefoneElementId, formElement) {
+    const nome = document.getElementById(nomeElementId);
     const telefone = document.getElementById(telefoneElementId);
     
-    if (!email || !telefone) {
+    if (!nome || !telefone) {
         alert('Por favor, preencha todos os campos.');
         return false;
     }
     
-    const emailValue = email.value.trim();
+    const nomeValue = nome.value.trim();
     const telefoneValue = telefone.value.trim();
     
-    if (!emailValue || !telefoneValue) {
+    if (!nomeValue || !telefoneValue) {
         alert('Por favor, preencha todos os campos.');
-        return false;
-    }
-    
-    // Validar formato de email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(emailValue)) {
-        alert('Por favor, insira um email válido.');
         return false;
     }
     
@@ -253,10 +246,10 @@ async function processFormSubmission(emailElementId, telefoneElementId, formElem
     
     try {
         // Aguardar salvamento no Supabase antes de redirecionar
-        await trySaveToSupabase(emailValue, telefoneValue);
+        await trySaveToSupabase(nomeValue, telefoneValue);
         
         // ✅ NOVO: Enviar webhook para o n8n após salvar no Supabase
-        await sendWebhookToN8N(emailValue, telefoneValue);
+        await sendWebhookToN8N(nomeValue, telefoneValue);
         
         // Disparar evento de conversão do Meta Pixel
         if (typeof fbq !== 'undefined') {
@@ -270,9 +263,8 @@ async function processFormSubmission(emailElementId, telefoneElementId, formElem
         }
         
         // Construir URL com parâmetros do formulário
-        const nome = ''; // Campo nome não existe no formulário atual
         const telefoneNormalizado = normalizePhone(telefoneValue);
-        const redirectUrl = `https://jornadadaprosperidade.applive.com.br/justintimegiovani/evento?nome=${encodeURIComponent(nome)}&email=${encodeURIComponent(emailValue)}&telefone=${encodeURIComponent(telefoneNormalizado)}`;
+        const redirectUrl = `https://jornadadaprosperidade.applive.com.br/justintimegiovani/evento?nome=${encodeURIComponent(nomeValue)}&telefone=${encodeURIComponent(telefoneNormalizado)}`;
         
         // Redirecionar diretamente para o link após salvar no Supabase
         window.location.href = redirectUrl;
@@ -281,7 +273,7 @@ async function processFormSubmission(emailElementId, telefoneElementId, formElem
         console.error('Erro ao processar formulário:', error);
         // Mesmo com erro, redirecionar diretamente com os dados disponíveis
         const telefoneNormalizado = normalizePhone(telefoneValue);
-        const redirectUrl = `https://jornadadaprosperidade.applive.com.br/justintimegiovani/evento?nome=${encodeURIComponent('')}&email=${encodeURIComponent(emailValue)}&telefone=${encodeURIComponent(telefoneNormalizado)}`;
+        const redirectUrl = `https://jornadadaprosperidade.applive.com.br/justintimegiovani/evento?nome=${encodeURIComponent(nomeValue)}&telefone=${encodeURIComponent(telefoneNormalizado)}`;
         window.location.href = redirectUrl;
     }
     
@@ -395,7 +387,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (leadFormFixed) {
         leadFormFixed.addEventListener('submit', function(e) {
             e.preventDefault();
-            processFormSubmission('emailFixed', 'telefoneFixed', leadFormFixed);
+            processFormSubmission('nomeFixed', 'telefoneFixed', leadFormFixed);
         });
     }
 });
