@@ -60,13 +60,13 @@ function formatPhoneForSupabase(telefone) {
     return '55' + telefoneFormatado;
 }
 
-// Enviar webhook para o n8n com nome e telefone
-async function sendWebhookToN8N(nome, telefone) {
+// Enviar webhook para o n8n com email e telefone
+async function sendWebhookToN8N(email, telefone) {
     try {
         const telefoneFormatado = formatPhoneForWebhook(telefone);
         console.log('=== ENVIANDO WEBHOOK PARA N8N ===');
         console.log('URL:', N8N_WEBHOOK_URL);
-        console.log('Dados:', { nome, telefone: telefoneFormatado });
+        console.log('Dados:', { email, telefone: telefoneFormatado });
 
         const response = await fetch(N8N_WEBHOOK_URL, {
             method: 'POST',
@@ -74,7 +74,7 @@ async function sendWebhookToN8N(nome, telefone) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                nome: nome.trim(),
+                email: email.trim(),
                 telefone: telefoneFormatado
             })
         });
@@ -114,9 +114,9 @@ async function sendWebhookToN8N(nome, telefone) {
 }
 
 // Tentar salvar no Supabase - agora aguarda o resultado
-async function trySaveToSupabase(nome, telefone) {
+async function trySaveToSupabase(email, telefone) {
     console.log('=== TENTANDO SALVAR NO SUPABASE ===');
-    console.log('Dados:', { nome, telefone });
+    console.log('Dados:', { email, telefone });
     
     // Usar o cliente que foi criado no HTML
     const cliente = window.supabaseClient;
@@ -144,7 +144,7 @@ async function trySaveToSupabase(nome, telefone) {
     console.log('Enviando dados para Supabase...');
     const { data, error } = await clienteFinal
         .from('interesse_giovanni')
-        .insert([{ nome, telefone: telefoneFormatado }]);
+        .insert([{ email, telefone: telefoneFormatado }]);
     
     if (error) {
         console.error('❌ ERRO ao salvar no Supabase:', error);
@@ -218,20 +218,27 @@ window.scrollToForm = scrollToForm;
 window.closeModal = closeModal;
 
 // Função reutilizável para processar submissão do formulário
-async function processFormSubmission(nomeElementId, telefoneElementId, formElement) {
-    const nome = document.getElementById(nomeElementId);
+async function processFormSubmission(emailElementId, telefoneElementId, formElement) {
+    const email = document.getElementById(emailElementId);
     const telefone = document.getElementById(telefoneElementId);
     
-    if (!nome || !telefone) {
+    if (!email || !telefone) {
         alert('Por favor, preencha todos os campos.');
         return false;
     }
     
-    const nomeValue = nome.value.trim();
+    const emailValue = email.value.trim();
     const telefoneValue = telefone.value.trim();
     
-    if (!nomeValue || !telefoneValue) {
+    if (!emailValue || !telefoneValue) {
         alert('Por favor, preencha todos os campos.');
+        return false;
+    }
+    
+    // Validar formato de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(emailValue)) {
+        alert('Por favor, insira um email válido.');
         return false;
     }
     
@@ -246,10 +253,10 @@ async function processFormSubmission(nomeElementId, telefoneElementId, formEleme
     
     try {
         // Aguardar salvamento no Supabase antes de redirecionar
-        await trySaveToSupabase(nomeValue, telefoneValue);
+        await trySaveToSupabase(emailValue, telefoneValue);
         
         // ✅ NOVO: Enviar webhook para o n8n após salvar no Supabase
-        await sendWebhookToN8N(nomeValue, telefoneValue);
+        await sendWebhookToN8N(emailValue, telefoneValue);
         
         // Disparar evento de conversão do Meta Pixel
         if (typeof fbq !== 'undefined') {
@@ -349,7 +356,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (leadFormFixed) {
         leadFormFixed.addEventListener('submit', function(e) {
             e.preventDefault();
-            processFormSubmission('nomeFixed', 'telefoneFixed', leadFormFixed);
+            processFormSubmission('emailFixed', 'telefoneFixed', leadFormFixed);
         });
     }
 });

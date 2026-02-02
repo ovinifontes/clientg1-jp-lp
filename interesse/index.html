@@ -30,71 +30,71 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body class="theme-light">
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <span class="badge">A JORNADA DA PROSPERIDADE</span>
-            </div>
-        </div>
-    </header>
 
-    <!-- Hero Section -->
+    <!-- Hero Section - Layout lado a lado -->
     <section class="hero">
-        <div class="hero-image-wrapper">
-            <span class="hero-badge">WEBINAR AO VIVO | 03/02/2026</span>
-            <img src="images/giovanni_correto_topo_mobile.jpg" alt="Giovani Storino - Jornada da Prosperidade" class="hero-image">
-        </div>
         <div class="container">
-            <div class="hero-content">
-                <h1>
-                    Você já sentiu que está fazendo muita coisa mas sem clareza do que realmente importa?
-                </h1>
-
-                <!-- ✅ Corrigido: fechando o <p> corretamente -->
-                <p class="hero-subtitle">
-                    Um encontro ao vivo <strong>para quem sente que a vida anda corrida demais e quer voltar a ter mais clareza</strong> no dia a dia.
-                </p>
-
-                <p class="hero-date">📅 <strong>03 de Fevereiro de 2026</strong></p>
-                <p class="hero-date">🕗 <strong>20h (horário de Brasília)</strong></p>
-                <p class="hero-date">🌐 <strong>100% online</strong> | <span>AO VIVO</span></p>
-                
-                <!-- Formulário Fixo dentro da Hero -->
-                <div class="fixed-form-wrapper" id="topo-form">
-                    <h2 class="fixed-form-title" style="text-align: center;">Receba o acesso ao encontro ao vivo</h2>
-                    <p class="fixed-form-subtitle">Deixe seu nome e WhatsApp para receber o link e as informações do encontro.</p>
-
-                    <form id="leadFormFixed">
-                        <div class="form-group">
-                            <input type="text" id="nomeFixed" name="nomeFixed" placeholder="Insira seu nome" required>
-                        </div>
-                        <div class="form-group">
-                            <div class="phone-input">
-                                <div class="phone-prefix">
-                                    <span>🇧🇷</span>
-                                    <span>+55</span>
-                                    <span>▼</span>
-                                </div>
-                                <input type="tel" id="telefoneFixed" name="telefoneFixed" placeholder="(00) 00000-0000" required>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn-submit">QUERO RECEBER O ACESSO</button>
-
-                        <!-- ✅ NOVO: microcopy de confiança (alta conversão) -->
-                        <p class="fixed-form-microcopy" style="margin-top:10px; font-size:13px; opacity:0.9; text-align:left;">
-                            🔒 Após a inscrição, você será direcionado para um <strong>grupo de WhatsApp somente para avisos</strong>.
-                            <strong>Apenas os administradores</strong> enviam mensagens. É por lá que você receberá o <strong>link do webinar</strong> e os <strong>lembretes</strong>.
+            <div class="hero-wrapper">
+                <div class="hero-content-wrapper">
+                    <div class="hero-text-content">
+                        <h1 class="hero-title">
+                            <span class="hero-title-badge">Aula Ao Vivo para Organizar as Finanças</span><br>
+                            DESCUBRA COMO ORGANIZAR SEU DINHEIRO <strong>E PARAR DE VIVER NO APERTO TODO MÊS</strong>
+                        </h1>
+                        
+                        <p class="hero-subtitle">
+                            Nesta Aula ao Vivo você vai aprender a organizar seu dinheiro e suas prioridades financeiras de forma simples, mesmo ganhando pouco ou tendo muitas contas para pagar.
                         </p>
-                    </form>
+
+                        <!-- Formulário dentro do Hero -->
+                        <div class="fixed-form-wrapper" id="topo-form">
+                            <form id="leadFormFixed">
+                                <div class="form-group">
+                                    <input type="email" id="emailFixed" name="emailFixed" placeholder="Digite o seu Email *" required>
+                                </div>
+                                <div class="form-group">
+                                    <input type="tel" id="telefoneFixed" name="telefoneFixed" placeholder="Digite seu Whatsapp *" required>
+                                </div>
+
+                                <button type="submit" class="btn-submit">ACESSAR AULA AO VIVO</button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-image-wrapper">
+                        <span class="hero-badge">WEBINAR AO VIVO | 03/02/2026</span>
+                        <img src="images/img_interesse_topo.jpeg" alt="Giovani Storino - Jornada da Prosperidade" class="hero-image">
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ✅ NOVA SEÇÃO (faltava no seu HTML): Contexto + Aprendizados -->
-    <section class="learn-section">
+    <!-- Countdown Section - Seção separada -->
+    <section class="countdown-section">
+        <div class="container">
+            <div class="countdown-wrapper">
+                <span class="countdown-title">LIVE COMEÇANDO EM:</span>
+                <div class="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="countdown-hours">00</div>
+                        <div class="countdown-label">Horas</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="countdown-minutes">01</div>
+                        <div class="countdown-label">Minutos</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="countdown-number" id="countdown-seconds">56</div>
+                        <div class="countdown-label">Segundos</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Learn Section -->
+    <section class="learn-section" style="display: none;">
         <div class="container">
             <h2 class="section-title">Antes de tudo, uma reflexão importante</h2>
 
@@ -102,7 +102,7 @@
                 Nem tudo na vida começa errado. Às vezes, começa <strong>desorganizado</strong>. Tem gente que se esforça, trabalha, ora, tenta fazer o melhor mas mesmo assim sente que anda sempre cansada, confusa ou sem clareza. Esse encontro ao vivo é um convite para <strong>parar</strong>, refletir e entender por que tantas áreas da vida acabam ficando bagunçadas quando a mente vive no automático. Sem promessas vazias. Sem fórmulas rápidas. Apenas clareza sobre o que precisa ser colocado em ordem primeiro.
             </p>
 
-            <h3 class="learn-subtitle">Perceba: não são “o que você vai aprender”, <br> são situações que a pessoa reconhece 👇</h3>
+            <h3 class="learn-subtitle">Perceba: não são "o que você vai aprender", <br> são situações que a pessoa reconhece 👇</h3>
 
             <ul class="learn-list">
                 <li>🧠 Por que mesmo se esforçando, muita gente sente que não sai do lugar</li>
@@ -110,7 +110,7 @@
                 <li>👨‍👩‍👧‍👦 O impacto silencioso disso nos relacionamentos e na família</li>
                 <li>💰 Por que o dinheiro quase nunca é o problema inicial</li>
                 <li>📖 O que fé, rotina e escolhas práticas têm a ver com tudo isso</li>
-                <li><strong>Neste encontro, você vai entender por onde começar a colocar ordem na vida.</strong><li>
+                <li><strong>Neste encontro, você vai entender por onde começar a colocar ordem na vida.</strong></li>
             </ul>
         </div>
     </section>
@@ -125,7 +125,7 @@
                     <div class="card-icon">🧠</div>
                     <h3 class="card-title">Quem quer blindar a mente e sair do piloto automático.</h3>
                     <p class="card-text">
-                        Você até tenta, mas vive no modo “apagar incêndio”. Aqui você entende como criar <strong>clareza</strong>,
+                        Você até tenta, mas vive no modo "apagar incêndio". Aqui você entende como criar <strong>clareza</strong>,
                         <strong>direção</strong> e constância sem viver refém de ansiedade e impulso.
                     </p>
                 </div>
@@ -171,7 +171,7 @@
         </div>
     </section>
 
-    <!-- Author Section -->
+    <!-- Author Section - Layout lado a lado -->
     <section class="author-section">
         <div class="container">
             <div class="author-content">
@@ -179,7 +179,7 @@
                     <img src="images/giovanni_circulo_elemsm.jpeg" alt="Giovani Storino" class="author-image">
                 </div>
                 <div class="author-info">
-                    <h2 class="author-title">OLÁ, EU SOU GIOVANI STORINO.</h2>
+                    <h2 class="author-title">CONHEÇA O <span class="author-title-highlight">GIOVANI STORINO</span></h2>
 
                     <p class="author-text">
                         A Jornada da Prosperidade nasceu depois de perceber um padrão claro:
@@ -210,7 +210,6 @@
         </div>
     </footer>
 
-
     <!-- Modal de Parabéns -->
     <div id="successModal" class="modal">
         <div class="modal-content success-modal">
@@ -236,9 +235,9 @@
             </p>
 
             <div class="countdown-circle">
-                <span id="redirectCountdown">10</span>
+                <span id="redirectCountdown">15</span>
             </div>
-            <p class="redirect-text">Redirecionando em <span id="redirectSeconds">10</span> segundo(s)...</p>
+            <p class="redirect-text">Redirecionando em <span id="redirectSeconds">15</span> segundo(s)...</p>
 
             <a href="https://chat.whatsapp.com/J401aAtX0LbAFHzxwGbSf7" class="btn-whatsapp" target="_blank">Entrar no grupo de avisos</a>
             <p class="fallback-text">Se não for redirecionado automaticamente, clique no botão acima.</p>
