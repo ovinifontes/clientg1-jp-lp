@@ -299,7 +299,7 @@ function startRedirectCountdown() {
     let seconds = 15;
     const countdownElement = document.getElementById('redirectCountdown');
     const secondsElement = document.getElementById('redirectSeconds');
-    const whatsappLink = 'https://chat.whatsapp.com/J401aAtX0LbAFHzxwGbSf7';
+    const whatsappLink = 'https://jornadadaprosperidade.applive.com.br/justintimegiovani';
     
     if (countdownElement) countdownElement.textContent = seconds;
     if (secondsElement) secondsElement.textContent = seconds;

@@ -183,6 +183,7 @@ body {
 body.theme-dark .fixed-form-wrapper .form-group input,
 body.theme-dark .form-group input {
     background: #ffffff;
+    color: #000000;
 }
 
 .fixed-form-wrapper .phone-input {
