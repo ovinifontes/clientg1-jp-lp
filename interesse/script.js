@@ -331,9 +331,63 @@ function startRedirectCountdown() {
     }, 1000);
 }
 
+// Contador regressivo da live
+function startLiveCountdown() {
+    // Começar com 1 minuto e 56 segundos (116 segundos no total)
+    let totalSeconds = 116; // 1 minuto (60s) + 56 segundos
+    
+    const hoursElement = document.getElementById('countdown-hours');
+    const minutesElement = document.getElementById('countdown-minutes');
+    const secondsElement = document.getElementById('countdown-seconds');
+    const countdownTitle = document.querySelector('.countdown-title');
+    const countdownContainer = document.querySelector('.countdown');
+    
+    function updateCountdown() {
+        if (totalSeconds <= 0) {
+            // Quando zerar, mostrar "A LIVE COMEÇOU"
+            if (countdownTitle) {
+                countdownTitle.textContent = 'A LIVE COMEÇOU';
+                countdownTitle.classList.add('live-started');
+            }
+            if (countdownContainer) {
+                countdownContainer.style.display = 'none';
+            }
+            const countdownWrapper = document.querySelector('.countdown-wrapper');
+            if (countdownWrapper) {
+                countdownWrapper.classList.add('live-started-wrapper');
+            }
+            return;
+        }
+        
+        // Calcular horas, minutos e segundos
+        const hours = Math.floor(totalSeconds / 3600);
+        const minutes = Math.floor((totalSeconds % 3600) / 60);
+        const seconds = totalSeconds % 60;
+        
+        // Atualizar elementos
+        if (hoursElement) hoursElement.textContent = String(hours).padStart(2, '0');
+        if (minutesElement) minutesElement.textContent = String(minutes).padStart(2, '0');
+        if (secondsElement) secondsElement.textContent = String(seconds).padStart(2, '0');
+        
+        totalSeconds--;
+    }
+    
+    // Atualizar imediatamente e depois a cada segundo
+    updateCountdown();
+    const interval = setInterval(() => {
+        updateCountdown();
+        if (totalSeconds < 0) {
+            clearInterval(interval);
+        }
+    }, 1000);
+}
+
 // Inicializar tudo quando o DOM estiver pronto
 document.addEventListener('DOMContentLoaded', function() {
     // O cliente Supabase é criado diretamente no HTML, não precisa inicializar aqui
+    
+    // Iniciar contador regressivo da live
+    startLiveCountdown();
     
     // Aplicar máscara no campo de telefone do formulário fixo
     const telefoneInputFixed = document.getElementById('telefoneFixed');

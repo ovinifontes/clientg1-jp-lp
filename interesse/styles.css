@@ -179,6 +179,12 @@ body {
     opacity: 1;
 }
 
+/* Tema Dark - Background mais claro para inputs */
+body.theme-dark .fixed-form-wrapper .form-group input,
+body.theme-dark .form-group input {
+    background: #ffffff;
+}
+
 .fixed-form-wrapper .phone-input {
     display: block;
 }
@@ -459,6 +465,29 @@ body.theme-light .hero-badge {
     letter-spacing: 1px;
     margin: 0;
     white-space: nowrap;
+}
+
+/* Quando a live começar */
+.live-started-wrapper {
+    justify-content: center;
+}
+
+.countdown-title.live-started {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-align: center;
+    width: 100%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
 }
 
 .hero-date-info {
