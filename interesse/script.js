@@ -267,7 +267,7 @@ async function processFormSubmission(nomeElementId, telefoneElementId, formEleme
         if (successModal) {
             successModal.classList.add('active');
             document.body.style.overflow = 'hidden';
-            // Iniciar countdown de 5 segundos
+            // Iniciar countdown de 15 segundos
             startRedirectCountdown();
         } else {
             // Fallback: se o modal não existir, redirecionar diretamente
@@ -304,7 +304,7 @@ function startRedirectCountdown() {
         loadingIndicator.style.display = 'none';
     }
     
-    let seconds = 5;
+    let seconds = 15;
     const countdownElement = document.getElementById('redirectCountdown');
     const secondsElement = document.getElementById('redirectSeconds');
     const whatsappLink = 'https://chat.whatsapp.com/J401aAtX0LbAFHzxwGbSf7';
