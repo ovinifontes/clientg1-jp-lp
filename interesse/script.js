@@ -262,19 +262,51 @@ async function processFormSubmission(nomeElementId, telefoneElementId, formEleme
             formElement.reset();
         }
         
-        // Construir URL com parâmetros do formulário
-        const telefoneNormalizado = normalizePhone(telefoneValue);
-        const redirectUrl = `https://jornadadaprosperidade.applive.com.br/justintimegiovani/evento?nome=${encodeURIComponent(nomeValue)}&telefone=${encodeURIComponent(telefoneNormalizado)}`;
-        
-        // Redirecionar diretamente para o link após salvar no Supabase
-        window.location.href = redirectUrl;
+        // Mostrar modal de agradecimento
+        const successModal = document.getElementById('successModal');
+        if (successModal) {
+            // Garantir que o loading indicator apareça inicialmente
+            const loadingIndicator = document.querySelector('.loading-indicator');
+            if (loadingIndicator) {
+                loadingIndicator.style.display = 'flex';
+            }
+            
+            successModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Aguardar um pouco para mostrar o loading antes de iniciar o countdown
+            setTimeout(() => {
+                startRedirectCountdown();
+            }, 500);
+        } else {
+            // Se não houver modal, redirecionar diretamente
+            const whatsappLink = 'https://chat.whatsapp.com/D4aMbFu035c3PmMnIS7BNQ?mode=gi_t';
+            window.location.href = whatsappLink;
+        }
         
     } catch (error) {
         console.error('Erro ao processar formulário:', error);
-        // Mesmo com erro, redirecionar diretamente com os dados disponíveis
-        const telefoneNormalizado = normalizePhone(telefoneValue);
-        const redirectUrl = `https://jornadadaprosperidade.applive.com.br/justintimegiovani/evento?nome=${encodeURIComponent(nomeValue)}&telefone=${encodeURIComponent(telefoneNormalizado)}`;
-        window.location.href = redirectUrl;
+        // Mesmo com erro, mostrar modal e redirecionar
+        const successModal = document.getElementById('successModal');
+        if (successModal) {
+            // Garantir que o loading indicator apareça inicialmente
+            const loadingIndicator = document.querySelector('.loading-indicator');
+            if (loadingIndicator) {
+                loadingIndicator.style.display = 'flex';
+            }
+            
+            successModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Aguardar um pouco para mostrar o loading antes de iniciar o countdown
+            setTimeout(() => {
+                startRedirectCountdown();
+            }, 500);
+        } else {
+            // Se não houver modal, redirecionar diretamente
+            const whatsappLink = 'https://chat.whatsapp.com/D4aMbFu035c3PmMnIS7BNQ?mode=gi_t';
+            window.location.href = whatsappLink;
+        }
     }
     
     return true;
@@ -291,7 +323,7 @@ function startRedirectCountdown() {
     let seconds = 15;
     const countdownElement = document.getElementById('redirectCountdown');
     const secondsElement = document.getElementById('redirectSeconds');
-    const whatsappLink = 'https://jornadadaprosperidade.applive.com.br/justintimegiovani';
+    const whatsappLink = 'https://chat.whatsapp.com/D4aMbFu035c3PmMnIS7BNQ?mode=gi_t';
     
     if (countdownElement) countdownElement.textContent = seconds;
     if (secondsElement) secondsElement.textContent = seconds;
@@ -310,9 +342,10 @@ function startRedirectCountdown() {
 
 // Contador regressivo da live
 function startLiveCountdown() {
-    // Começar com 1 minuto e 56 segundos (116 segundos no total)
-    let totalSeconds = 116; // 1 minuto (60s) + 56 segundos
+    // Data alvo: 11/02/2026 às 00:00:00
+    const targetDate = new Date('2026-02-11T00:00:00');
     
+    const daysElement = document.getElementById('countdown-days');
     const hoursElement = document.getElementById('countdown-hours');
     const minutesElement = document.getElementById('countdown-minutes');
     const secondsElement = document.getElementById('countdown-seconds');
@@ -320,7 +353,10 @@ function startLiveCountdown() {
     const countdownContainer = document.querySelector('.countdown');
     
     function updateCountdown() {
-        if (totalSeconds <= 0) {
+        const now = new Date();
+        const difference = targetDate - now;
+        
+        if (difference <= 0) {
             // Quando zerar, mostrar "A LIVE COMEÇOU"
             if (countdownTitle) {
                 countdownTitle.textContent = 'A LIVE COMEÇOU';
@@ -336,24 +372,25 @@ function startLiveCountdown() {
             return;
         }
         
-        // Calcular horas, minutos e segundos
-        const hours = Math.floor(totalSeconds / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
+        // Calcular dias, horas, minutos e segundos
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
         
         // Atualizar elementos
+        if (daysElement) daysElement.textContent = String(days).padStart(2, '0');
         if (hoursElement) hoursElement.textContent = String(hours).padStart(2, '0');
         if (minutesElement) minutesElement.textContent = String(minutes).padStart(2, '0');
         if (secondsElement) secondsElement.textContent = String(seconds).padStart(2, '0');
-        
-        totalSeconds--;
     }
     
     // Atualizar imediatamente e depois a cada segundo
     updateCountdown();
     const interval = setInterval(() => {
         updateCountdown();
-        if (totalSeconds < 0) {
+        const now = new Date();
+        if (targetDate - now <= 0) {
             clearInterval(interval);
         }
     }, 1000);
