@@ -7,8 +7,9 @@ if (window.__scriptGiovanniLoaded) {
 // O cliente Supabase é criado diretamente no HTML quando o script carrega
 // Não precisa de inicialização complexa aqui
 
-// ⚠️ CONFIGURAÇÃO: URL do webhook do n8n
+// ⚠️ CONFIGURAÇÃO: URLs dos webhooks do n8n
 const N8N_WEBHOOK_URL = 'https://n8n00-vini-n8n.hq6fn5.easypanel.host/webhook/giovani_captura_bem_vindo';
+const N8N_WEBHOOK_URL_NOVO = 'https://0a10k-n8n-web.tk2vyh.easypanel.host/webhook/captura_cadastro_webnario';
 
 // Normalizar telefone: remover formatação e deixar apenas números
 function normalizePhone(telefone) {
@@ -60,15 +61,15 @@ function formatPhoneForSupabase(telefone) {
     return '55' + telefoneFormatado;
 }
 
-// Enviar webhook para o n8n com nome e telefone
-async function sendWebhookToN8N(nome, telefone) {
+// Função genérica para enviar webhook
+async function sendWebhook(url, nome, telefone, webhookName) {
     try {
         const telefoneFormatado = formatPhoneForWebhook(telefone);
-        console.log('=== ENVIANDO WEBHOOK PARA N8N ===');
-        console.log('URL:', N8N_WEBHOOK_URL);
+        console.log(`=== ENVIANDO WEBHOOK PARA ${webhookName} ===`);
+        console.log('URL:', url);
         console.log('Dados:', { nome, telefone: telefoneFormatado });
 
-        const response = await fetch(N8N_WEBHOOK_URL, {
+        const response = await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,7 +82,7 @@ async function sendWebhookToN8N(nome, telefone) {
 
         const responseText = await response.text();
         console.log('Status HTTP:', response.status);
-        console.log('Resposta do n8n (texto):', responseText);
+        console.log('Resposta do webhook (texto):', responseText);
 
         if (!response.ok) {
             // Tentar parsear como JSON se possível para ver o erro detalhado
@@ -95,22 +96,31 @@ async function sendWebhookToN8N(nome, telefone) {
             throw new Error(`Erro HTTP ${response.status}: ${errorDetails}`);
         }
 
-        console.log('✅✅✅ WEBHOOK ENVIADO COM SUCESSO PARA O N8N!');
+        console.log(`✅✅✅ WEBHOOK ${webhookName} ENVIADO COM SUCESSO!`);
         
         // Tentar parsear resposta como JSON se possível
         try {
             const responseData = JSON.parse(responseText);
-            console.log('Resposta do n8n (JSON):', responseData);
+            console.log('Resposta do webhook (JSON):', responseData);
         } catch (e) {
-            console.log('Resposta do n8n não é JSON, mas foi enviado com sucesso');
+            console.log('Resposta do webhook não é JSON, mas foi enviado com sucesso');
         }
 
     } catch (error) {
         // Não bloquear o fluxo se o webhook falhar
-        console.error('❌ ERRO ao enviar webhook para n8n:', error);
+        console.error(`❌ ERRO ao enviar webhook ${webhookName}:`, error);
         console.error('Mensagem de erro:', error.message);
         console.error('O formulário continuará normalmente mesmo com erro no webhook');
     }
+}
+
+// Enviar webhook para o n8n com nome e telefone (função mantida para compatibilidade)
+async function sendWebhookToN8N(nome, telefone) {
+    // Enviar para ambos os webhooks
+    await Promise.all([
+        sendWebhook(N8N_WEBHOOK_URL, nome, telefone, 'N8N ORIGINAL'),
+        sendWebhook(N8N_WEBHOOK_URL_NOVO, nome, telefone, 'N8N NOVO')
+    ]);
 }
 
 // Tentar salvar no Supabase - agora aguarda o resultado
@@ -142,8 +152,11 @@ async function trySaveToSupabase(nome, telefone) {
     console.log('Telefone formatado para Supabase:', telefoneFormatado);
     
     console.log('Enviando dados para Supabase...');
+    console.log('Tabela:', 'captura_giovani_01');
+    console.log('Dados a inserir:', { nome, telefone: telefoneFormatado });
+    
     const { data, error } = await clienteFinal
-        .from('interesse_giovanni')
+        .from('captura_giovani_01')
         .insert([{ nome, telefone: telefoneFormatado }]);
     
     if (error) {
@@ -151,6 +164,23 @@ async function trySaveToSupabase(nome, telefone) {
         console.error('Código:', error.code);
         console.error('Mensagem:', error.message);
         console.error('Detalhes:', error.details);
+        console.error('Hint:', error.hint);
+        console.error('Erro completo:', JSON.stringify(error, null, 2));
+        
+        // Se for erro de coluna não encontrada, tentar com nomes alternativos
+        if (error.code === '42703' || error.message.includes('column') || error.message.includes('does not exist')) {
+            console.warn('⚠️ Tentando com nomes de colunas alternativos...');
+            // Tentar com 'name' e 'phone'
+            const { data: dataAlt, error: errorAlt } = await clienteFinal
+                .from('captura_giovani_01')
+                .insert([{ name: nome, phone: telefoneFormatado }]);
+            
+            if (!errorAlt) {
+                console.log('✅✅✅ DADOS SALVOS COM NOMES ALTERNATIVOS!');
+                return dataAlt;
+            }
+        }
+        
         throw error;
     }
     
