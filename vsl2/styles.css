@@ -376,16 +376,16 @@ body {
     }
 
     .hero-title {
-        font-size: 28px;
+        font-size: 24px;
     }
 
     .hero-subtitle {
-        font-size: 20px;
+        font-size: 18px;
         margin-bottom: 30px;
     }
 
     .step-title {
-        font-size: 20px;
+        font-size: 18px;
         margin-bottom: 20px;
     }
 
@@ -401,11 +401,35 @@ body {
     }
 
     .modal-title {
-        font-size: 24px;
+        font-size: 20px;
     }
 
     .modal-subtitle {
-        font-size: 20px;
+        font-size: 18px;
+    }
+
+    .video-placeholder-content p {
+        font-size: 14px;
+    }
+
+    .video-placeholder-content small {
+        font-size: 12px;
+    }
+
+    .cta-note {
+        font-size: 14px;
+    }
+
+    .modal-close {
+        font-size: 24px;
+    }
+
+    .modal-description {
+        font-size: 14px;
+    }
+
+    .form-group input {
+        font-size: 16px;
     }
 }
 
@@ -1093,18 +1117,18 @@ body {
     }
 
     .section-title {
-        font-size: 24px;
+        font-size: 20px;
         margin-bottom: 30px;
     }
 
     .section-subtitle {
-        font-size: 16px;
+        font-size: 14px;
         margin-bottom: 30px;
     }
 
     .section-text,
     .section-description {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .btn-cta {
@@ -1138,7 +1162,7 @@ body {
     }
 
     .benefits-list__item {
-        font-size: 16px;
+        font-size: 14px;
         padding-left: 32px;
     }
 
@@ -1191,7 +1215,7 @@ body {
     }
 
     .pain-point-card {
-        font-size: 16px;
+        font-size: 14px;
         padding: 20px;
         min-height: 80px;
     }
@@ -1206,7 +1230,7 @@ body {
     }
 
     .bonus-card__title {
-        font-size: 20px;
+        font-size: 18px;
     }
 
     .pricing-grid {
@@ -1219,11 +1243,11 @@ body {
     }
 
     .pricing-card__title {
-        font-size: 28px;
+        font-size: 24px;
     }
 
     .pricing-card__total {
-        font-size: 24px;
+        font-size: 20px;
     }
 
     .client-logo {
@@ -1232,13 +1256,13 @@ body {
     }
 
     .faq-item__question {
-        font-size: 16px;
+        font-size: 14px;
         padding: 20px;
     }
 
     .faq-item__answer {
         padding: 0 20px 20px;
-        font-size: 14px;
+        font-size: 13px;
     }
 }
 
